@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	  	  
+<f:view contentType="text/html" />
+<h:head>
+	<title>Sistema de Notas Fiscais</title>
+	<h:outputScript name="jsf.js" library="javax.faces" target="head"/>
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="grid.css" />
+</h:head>
+
+<h:body>
+	<div id="blocoCabecalho">
+		<div class="conteiner">
+			<h:graphicImage library="imagens" name="logo-uber.png" id="logoCompany"/>
+
+			<h:outputLabel rendered="#{usuarioLogado.usuario.login != null}">
+				<div id="usuarioLogado">
+					Logado como: <h:outputText value="#{usuarioLogado.usuario.login}"/>
+				</div>
+				</h:outputLabel>
+		</div>
+	</div>
+	
+	<div id="blocoConteudo">
+		<div class="conteiner">
+			<ui:insert name="corpo"/>
+		</div>
+	</div>
+	<div id="blocoRodape">
+		<div class="container">
+			<p>Copyright 2010. Todos os Direitos reservados a Natanael Silva.</p>
+		</div> 
+	</div>
+</h:body>
+</html>

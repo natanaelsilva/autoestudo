@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<h2><h:outputText value="Cadastro de Produtos"/></h2>
+	<h:form id="formCadProduto">
+		<p:growl id="messages"/>
+		<fieldset>
+			<legend>Dados do Produto</legend>
+			<h:panelGrid columns="2" styleClass="campos">
+				<h:outputLabel value="Id:" for="id" rendered="#{produtoBean.produto.id != null}" />
+				<h:inputText id="id" readonly="true" value="#{produtoBean.produto.id}" rendered="#{produtoBean.produto.id != null}"/>
+				
+				<h:outputLabel value="Nome:" for="nome"/>
+				<h:inputText id="nome" value="#{produtoBean.produto.nome}">
+					<f:validator validatorId="comecaComMaiuscula" />
+				</h:inputText>
+				
+				<h:outputLabel value="Descrição:" for="descricao"/>
+				<h:inputTextarea id="descricao" value="#{produtoBean.produto.descricao}"/>
+				
+				<h:outputLabel value="Preço:"/>
+				<h:inputText id="preco" value="#{produtoBean.produto.preco}">
+					<f:validateDoubleRange minimum="0"/>
+				</h:inputText>
+			</h:panelGrid>
+			
+			<h:commandButton value="Gravar" action="#{produtoBean.grava}">		
+				<f:ajax execute="@form" render="@form :formListaProduto :formNotasFiscais"/>
+			</h:commandButton>
+			<h:commandButton value="Cancelar" action="#{produtoBean.limpaFormulario}">		
+				<f:ajax execute="@form" render="@form"/>
+			</h:commandButton>
+			
+		</fieldset>
+	</h:form>
+	
+	<h2><h:outputText value="Listagem de Produtos"/></h2>
+	<h:form id="formListaProduto">
+	<h:dataTable value="#{produtoBean.produtos}" var="p" styleClass="dados" rowClasses="impar,par">
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Id"/>
+			</f:facet>
+			<h:outputText value="#{p.id}"/>		
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Nome"/>
+			</f:facet>
+			<h:outputText value="#{p.nome}"/>		
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Descrição"/>
+			</f:facet>
+			<h:outputText value="#{p.descricao}"/>			
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Preço"/>
+			</f:facet>
+			<h:outputText value="#{p.preco}">
+				<f:convertNumber pattern="R$ #0.00"/>
+			</h:outputText>				
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Ações"/>
+			</f:facet>
+			<ui:remove>
+				<p:commandLink value="Destroy" onclick="confirmation.show()"/>  
+			    <p:confirmDialog message="Are you sure about destroying?" showEffect="bounce" hideEffect="explode" header="Initiating destroy process" severity="alert" widgetVar="confirmation">  
+			         <p:commandButton value="Yes" update="messages" oncomplete="confirmation.hide()" actionListener="#{buttonBean.destroyWorld}" />  
+			         <p:commandButton value="Not" onclick="confirmation.hide()" type="button" />   
+			    </p:confirmDialog>
+			</ui:remove>
+			<h:commandLink value="Remover" action="#{produtoBean.remove}">
+				<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}"/>
+				<f:ajax render=":formListaProduto :formCadProduto"/>
+			</h:commandLink>  
+				|
+			<h:commandLink value="Alterar">
+				<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}"/>
+				<f:ajax render=":formListaProduto :formCadProduto"/>
+			</h:commandLink>
+		</h:column>
+	</h:dataTable>
+	</h:form>
+</html>			

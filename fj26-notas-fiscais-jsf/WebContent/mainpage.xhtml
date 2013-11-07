@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<ui:composition template="/_template.xhtml">
+		<ui:define name="corpo">
+			<p:tabView>
+				<p:tab title="Produtos">
+					<ui:include src="produto.xhtml"/>
+				</p:tab> 
+				
+				<p:tab title="Notas Fiscais">
+					<ui:include src="notafiscal.xhtml"/>
+				</p:tab>
+
+				<p:tab title="Listas de Notas">
+					<ui:include src="listanotasfiscais.xhtml"/>
+				</p:tab>
+			</p:tabView>
+		</ui:define>
+	</ui:composition>
+	
+</html>
